@@ -678,7 +678,7 @@ liveBtn.addEventListener('click', () => {
 
     // Définir la plage horaire
     const debut = { h: 12, m: 30 };   // 16:30
-    const fin = { h: 12, m: 30 };    // 19:00
+    const fin = { h: 19, m: 00 };    // 19:00
 
     const minutesDebut = debut.h * 60 + debut.m;
     const minutesFin = fin.h * 60 + fin.m;
@@ -714,7 +714,7 @@ liveBtn.addEventListener('click', () => {
     const minutesActuelles = now.getHours() * 60 + now.getMinutes();
 
     // Plage ON AIR
-    const debut = { h: 16, m: 30 };   // 09:30
+    const debut = { h: 13, m: 30 };   // 09:30
     const fin = { h: 19, m: 00 };    // 17:15
 
     const start = debut.h * 60 + debut.m;
