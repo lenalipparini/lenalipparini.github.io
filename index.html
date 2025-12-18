@@ -15,6 +15,28 @@
 
   <style>
 	  
+	  .contact-buttons {
+ 		 display: flex;
+  		 gap: 15px;
+  		 flex-wrap: wrap;
+}
+
+.contact-btn {
+  padding: 12px 20px;
+  background-color: #111;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 30px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.contact-btn:hover {
+  background-color: #e91e63;
+  transform: scale(1.05);
+}
+	
 
     /* Halo */
     .halo {
@@ -97,26 +119,7 @@
       0%, 100% { opacity: 1; }
       50% { opacity: 0.4; }
     }
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  #message {
-      display: none; /* masqué par défaut */
-      padding: 0px;
-      border: 0px;
-      width: fit-content;
-      margin: 0px auto;
-      text-align: center;
-    }
-	   
-	  
+ 
     * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
 
     body {
@@ -271,6 +274,17 @@
       z-index:9999;
       animation:introOut 2.5s ease forwards;
     }
+	  
+	  #intro-podcast{
+      position:fixed;
+      inset:0;
+      background:#BDBDBD;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+      animation:introOut 2.5s ease forwards;
+    }
 
     .intro-inner{
       color:#fff;
@@ -337,14 +351,10 @@
       padding: 15px;
       margin: 20px auto;
       width: fit-content;
-      border: 1px solid #ccc;
+      border: 0px solid #ccc;
       text-align: center;
     }
-	  
-	  
-	  
-	  
-	  
+
 	  
 	  /* PLAYER STICKY */
     .podcast-player {
@@ -489,20 +499,34 @@ border-radius: 2px;
 </head>
 <body>
 
-<!-- INTRO ON AIR LÉGÈRE -->
-<div id="intro-onair">
-  <div class="intro-inner">
-    <span class="dot">●</span>
-    <h1>ON AIR</h1>
-  </div>
+	<!-- BLOC A : affiché pendant la plage horaire -->
+<div id="blocC" class="bloc" style="display:none;">
+	<!-- INTRO ON AIR LÉGÈRE -->
+	<div id="intro-onair">
+  		<div class="intro-inner">
+   		<span class="dot">●</span>
+    		<h1>ON AIR</h1>
+  		</div>
+	</div>
 </div>
+
+<!-- BLOC B : affiché hors plage horaire -->
+<div id="blocD" class="bloc" style="display:none;">
+  <div id="intro-podcast">
+  		<div class="intro-inner">
+   		<span class="dot">●</span>
+    		<h1>PODCAST</h1>
+  		</div>
+	</div>
+</div>
+
 
 <canvas id="bg"></canvas>
 
 <nav>
   <a href="#home">Accueil</a>
-  <a href="#xp">Parcours</a>
-  <a href="#audio">Portfolio</a>
+  <a href="#experience">Parcours</a>
+  <a href="#portfolio">Portfolio</a>
   <a href="#contact">Contact</a>
   <button id="themeToggle">🌙</button>
 </nav>
@@ -536,12 +560,12 @@ border-radius: 2px;
   </div>
 </section>
 
-<section id="xp">
+<section id="experience">
   <h2 data-aos="fade-right">Expériences</h2>
   <div class="audio-player">
     <div class="timeline-item" data-aos="fade-up">
       <span class="date">Depuis 2024</span>
-      <h3>Animatrice radio – RadioFrance</h3>
+      <h3>Animatrice radio – Radio France</h3>
       <p>Baladeur, enregistrement d’émissions et de voix, émissions et interviews en direct</p>
     </div>
     <div class="timeline-item" data-aos="fade-up" data-aos-delay="150">
@@ -577,31 +601,27 @@ border-radius: 2px;
   </div>
 </section>
 
-<section id="audio">
-  <h2 data-aos="fade-right">🎧 Extraits audio</h2>
+<section id="portfolio">
+  <h2 data-aos="fade-right">Portfolio</h2>
   <div class="audio-player" data-aos="zoom-in">
     <p>Interview – Émission du matin</p>
     <audio controls src="audio/extrait1.mp3"></audio>
   </div>
 </section>
-
-<section id="cv">
-  <h2 data-aos="fade-right">📄 CV</h2>
-
-  <p data-aos="fade-up">
-    Vous pouvez consulter ou télécharger mon CV papier au format PDF.
-  </p>
-
-  <div class="audio-player" data-aos="zoom-in">
-    <a href="cv/cv-animatrice-radio.pdf" target="_blank" style="font-weight:600;">⬇️ Télécharger mon CV (PDF)</a>
-  </div>
-</section>
-
 <section id="contact">
   <h2 data-aos="fade-right">Contact</h2>
 	  <div class="audio-player">
-  		<p data-aos="fade-up">📧 lena.lippa@gmail.com</p>
-  		<p data-aos="fade-up">📱 06 25 51 51 05</p>
+		<p data-aos="fade-up">Besoin d’une voix qui accroche, rassure ou fait sourire ?<br>
+			Je suis animatrice radio et voix off, prête à booster vos émissions, pubs, vidéos, podcasts ou événements avec énergie et bonne humeur !<br>
+			Une voix, une identité, une vraie personnalité sonore ✨<br>
+			📍 Partout en France<br>
+			📩 Un projet ? Une idée ? Écrivez-moi !</p><br>
+		  <div data-aos="fade-up" class="buttons-container" >
+  				<a href="mailto:lena.lippa@gmail.com" class="contact-btn">
+    				<i class="fa-solid fa-envelope"></i>
+  				</a>
+			
+			</div>
 	</div>
 </section>
 	
@@ -719,20 +739,26 @@ liveBtn.addEventListener('click', () => {
 
     // Définir la plage horaire
     const debut = { h: 16, m: 30 };   // 16:30
-    const fin = { h: 19, m: 00 };    // 19:00
+    const fin = { h: 23, m: 00 };    // 19:00
 
     const minutesDebut = debut.h * 60 + debut.m;
     const minutesFin = fin.h * 60 + fin.m;
 
     const blocA = document.getElementById("blocA");
     const blocB = document.getElementById("blocB");
+	const blocC = document.getElementById("blocC");
+    const blocD = document.getElementById("blocD");
 
     if (minutesActuelles >= minutesDebut && minutesActuelles < minutesFin) {
       blocA.style.display = "block";
       blocB.style.display = "none";
+	  blocC.style.display = "block";
+      blocD.style.display = "none";
     } else {
       blocA.style.display = "none";
       blocB.style.display = "block";
+	  blocC.style.display = "none";
+      blocD.style.display = "block";
     }
   }
 
@@ -756,7 +782,7 @@ liveBtn.addEventListener('click', () => {
 
     // Plage ON AIR
     const debut = { h: 16, m: 30 };   // 09:30
-    const fin = { h: 19, m: 00 };    // 17:15
+    const fin = { h: 23, m: 00 };    // 17:15
 
     const start = debut.h * 60 + debut.m;
     const end = fin.h * 60 + fin.m;
