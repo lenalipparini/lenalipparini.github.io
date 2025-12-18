@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Portfolio – Léna Lipparini - Animatrice radio, comédienne et voix off</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
+
+  <!-- AOS animations -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <style>
+	  
+
+    /* Halo */
+    .halo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      animation: pulse 2.5s infinite;
+    }
+
+    .on-air .halo {
+      background: rgba(255, 0, 0, 0.25);
+    }
+
+    .off-air .halo {
+      background: rgba(150, 150, 150, 0.15);
+      animation: none;
+    }
+
+    /* Photo */
+    .photo {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
+      border-radius: 50%;
+      overflow: hidden;
+      z-index: 2;
+      border: 3px solid;
+    }
+
+    .on-air .photo {
+      border-color: red;
+    }
+
+    .off-air .photo {
+      border-color: #aaa;
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Label */
+    .label {
+      margin-top: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .on-air .label {
+      color: red;
+      animation: blink 1.2s infinite;
+    }
+
+    .off-air .label {
+      color: #999;
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1.4);
+        opacity: 0;
+      }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  #message {
+      display: none; /* masqué par défaut */
+      padding: 0px;
+      border: 0px;
+      width: fit-content;
+      margin: 0px auto;
+      text-align: center;
+    }
+	   
+	  
+    * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
+
+    body {
+      background:#f3efe8;
+      color:#333;
+      overflow-x:hidden;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    body.dark {
+      background:#1c1c1c;
+      color:#f0f0f0;
+    }
+
+    canvas {
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      z-index:-1;
+    }
+
+    /* NAV */
+    nav {
+      position:fixed;
+      top:20px;
+      right:30px;
+      background:rgba(255,255,255,0.85);
+      padding:12px 20px;
+      border-radius:30px;
+      box-shadow:0 8px 20px rgba(0,0,0,0.1);
+      z-index:10;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    body.dark nav { background:rgba(30,30,30,0.9); }
+
+    nav a {
+      font-size:0.9rem;
+      font-weight:600;
+      text-decoration:none;
+      color:inherit;
+    }
+
+    nav button {
+      border:none;
+      background:none;
+      cursor:pointer;
+      font-size:1rem;
+    }
+
+    section {
+      min-height:100vh;
+      max-width:1000px;
+      margin:auto;
+      padding:120px 20px 80px;
+    }
+
+    section h2 {
+      font-size:2.2rem;
+      margin-bottom:30px;
+      border-left:5px solid #d94b2b;
+      padding-left:15px;
+    }
+
+    /* HERO */
+    .hero {
+      text-align:center;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .hero h1 { font-size:3.2rem; }
+    .hero p { font-size:1.3rem; opacity:0.8; margin-top:15px; }
+
+    /* TIMELINE */
+    .timeline {
+      border-left:3px solid #d94b2b;
+      padding-left:30px;
+    }
+
+    .timeline-item {
+      margin-bottom:40px;
+    }
+
+    .timeline-item .date {
+      font-size:0.85rem;
+      opacity:0.7;
+    }
+
+    /* AUDIO */
+    .audio-player {
+      background:rgba(255,255,255,0.85);
+      padding:20px;
+      border-radius:16px;
+      margin-bottom:20px;
+    }
+
+    body.dark .audio-player {
+      background:rgba(40,40,40,0.85);
+    }
+
+    /* PLAYER STICKY */
+    .onair-player {
+      position:fixed;
+      bottom:30px;
+      left:30px;
+      display:flex;
+      align-items:center;
+      gap:15px;
+      background:rgba(255,255,255,0.9);
+      padding:12px 18px;
+      border-radius:40px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.15);
+      z-index:20;
+      backdrop-filter: blur(8px);
+    }
+
+    body.dark .onair-player {
+      background:rgba(30,30,30,0.95);
+    }
+
+    .onair-player audio {
+      height:32px;
+    }
+
+    .onair-player .live {
+      font-weight:700;
+      color:#d94b2b;
+      font-size:0.9rem;
+      animation:pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%{opacity:1}
+      50%{opacity:0.4}
+      100%{opacity:1}
+    }
+
+    /* INTRO ON AIR */
+    #intro-onair{
+      position:fixed;
+      inset:0;
+      background:#d94b2b;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+      animation:introOut 2.5s ease forwards;
+    }
+
+    .intro-inner{
+      color:#fff;
+      text-align:center;
+      animation:pulse 1.2s infinite;
+    }
+
+    .intro-inner h1{
+      font-size:3rem;
+      letter-spacing:4px;
+    }
+
+    .intro-inner .dot{
+      font-size:2.5rem;
+      display:block;
+      margin-bottom:10px;
+    }
+
+    @keyframes introOut{
+      0%{opacity:1}
+      80%{opacity:1}
+      100%{opacity:0;visibility:hidden}
+    } {
+      0%{opacity:1}
+      50%{opacity:0.4}
+      100%{opacity:1}
+    }
+
+    footer {
+      text-align:center;
+      padding:40px;
+      opacity:0.7;
+    }
+
+    /* PLAYER – VOLUME CUSTOM SIMPLE */
+    .onair-player button{
+      width:34px;
+      height:34px;
+      border-radius:50%;
+      border:none;
+      background:#d94b2b;
+      color:#fff;
+      font-size:0.9rem;
+      cursor:pointer;
+    }
+
+    body.dark .onair-player button{
+      background:#f39c12;
+    }
+
+    #volumeControl{
+      width:80px;
+      cursor:pointer;
+    }
+
+    @media(max-width:768px){
+      .hero h1{font-size:2.4rem;}
+      nav{right:10px;}
+      .onair-player{left:10px; right:10px; bottom:15px;}
+    }
+	  
+	  
+	  .bloc {
+      padding: 15px;
+      margin: 20px auto;
+      width: fit-content;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+	  
+	  
+	  
+	  
+	  
+	  
+	  /* PLAYER STICKY */
+    .podcast-player {
+      position:fixed;
+      bottom:30px;
+      left:30px;
+      display:flex;
+      align-items:center;
+      gap:15px;
+      background:rgba(255,255,255,0.9);
+      padding:12px 18px;
+      border-radius:40px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.15);
+      z-index:20;
+      backdrop-filter: blur(8px);
+    }
+	  
+	.podcast-player audio {
+      height:32px;
+    }
+
+    .podcast-player .rec {
+      font-weight:700;
+      color:#d94b2b;
+      font-size:0.9rem;
+      animation:pulse 1.5s infinite;
+    }
+	  
+	/* PLAYER – VOLUME CUSTOM SIMPLE */
+    .podcast-player button{
+      width:34px;
+      height:34px;
+      border-radius:50%;
+      border:none;
+      background:#d94b2b;
+      color:#fff;
+      font-size:0.9rem;
+      cursor:pointer;
+    }
+
+    body.dark .podcast-player button{
+      background:#f39c12;
+    }
+
+    #volumeControl{
+      width:80px;
+      cursor:pointer;
+    }
+
+    @media(max-width:768px){
+      .hero h1{font-size:2.4rem;}
+      nav{right:10px;}
+      .podcast-player{left:10px; right:10px; bottom:15px;}
+    }
+	  
+	  
+	  
+	  
+	  .buttons-container {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 42px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-cv {
+            background-color: #d94b2b;
+        }
+
+        .btn-linkedin {
+            background-color: #0077b5;
+        }
+
+        /* Responsive */
+        @media (max-width: 100px) {
+            .btn {
+                width: 85px;
+                height: 85px;
+                font-size: 34px;
+            }
+        }
+  </style>
+</head>
+<body>
+
+<!-- INTRO ON AIR LÉGÈRE -->
+<div id="intro-onair">
+  <div class="intro-inner">
+    <span class="dot">●</span>
+    <h1>ON AIR</h1>
+  </div>
+</div>
+
+<canvas id="bg"></canvas>
+
+<nav>
+  <a href="#home">Accueil</a>
+  <a href="#about">À propos</a>
+  <a href="#xp">Parcours</a>
+  <a href="#audio">Portfolio</a>
+  <a href="#contact">Contact</a>
+  <button id="themeToggle">🌙</button>
+</nav>
+
+<section id="home" class="hero">
+	<div id="antenne" class="container">
+  			<div class="photo">
+    			<img src="images/photo1.png" alt="Léna LIPPARINI">
+ 			</div>
+  			<div class="label">OFF AIR</div>
+		</div>
+  <h1 data-aos="fade-up">🎙️ Léna Lipparini 🎙️</h1>
+  <p data-aos="fade-up" data-aos-delay="200">Animatrice radio, comédienne et voix off</p>
+	<br><div class="buttons-container">
+        <!-- Bouton CV -->
+        <a href="cv.pdf" target="_blank" class="btn btn-cv" aria-label="Voir le CV">
+            <i class="fa-solid fa-file-lines"></i>
+        </a>
+
+        <!-- Bouton LinkedIn -->
+        <a href="https://www.linkedin.com/in/léna-lipparini/" target="_blank" class="btn btn-linkedin" aria-label="Profil LinkedIn">
+            <i class="fa-brands fa-linkedin-in"></i>
+        </a>
+    </div>
+</section>
+
+<section id="about">
+  <h2 data-aos="fade-right">À propos</h2>
+	<div class="audio-player">
+    <p data-aos="fade-up">Animatrice radio passionnée, spécialisée dans l’animation, les interviews et la création de contenus audio.</p>
+  </div>
+</section>
+
+<section id="xp">
+  <h2 data-aos="fade-right">Expériences</h2>
+  <div class="audio-player">
+    <div class="timeline-item" data-aos="fade-up">
+      <span class="date">Depuis 2024</span>
+      <h3>Animatrice radio – RadioFrance</h3>
+      <p>Baladeur, enregistrement d’émissions et de voix, émissions et interviews en direct</p>
+    </div>
+    <div class="timeline-item" data-aos="fade-up" data-aos-delay="150">
+      <span class="date">2022 - 2023</span>
+      <h3>Doublage de voix - ESRA Bretagne, Conservatoire d'Amiens</h3>
+      <p>Voix off et ateliers doublage</p>
+    </div>
+  </div>
+<h2 data-aos="fade-right">Diplômes et formations</h2>
+  <div class="audio-player">
+    <div class="timeline-item" data-aos="fade-up">
+      <span class="date">2024</span>
+      <h3>Animatrice Technicienne Réalisatrice radio - La Skol (Guichen)</h3>
+      <p>Rédaction, montage, conception audio, création de chroniques. Apprentissage des méthodes d’animation, de la technique et de la réalisation radiophonique</p>
+    </div>
+    <div class="timeline-item" data-aos="fade-up" data-aos-delay="150">
+      <span class="date">2021 - 2022</span>
+      <h3>Cycle 3 d'Art Dramatique (Certificat d’Études Théâtrales) - Conservatoire à rayonnement régional Amiens </h3>
+      <p>Maîtrise vocale, verbale et corporelle, interprétation des voix, mise en jeu, capacité de mémorisation</p>
+    </div>
+	<div class="timeline-item" data-aos="fade-up" data-aos-delay="150">
+      <span class="date">2020 - 2022</span>
+      <h3>DUT Carrières Sociales - Université de Rennes 1 (Rennes)</h3>
+    </div>
+	<div class="timeline-item" data-aos="fade-up" data-aos-delay="150">
+      <span class="date">2018</span>
+      <h3>Baccalauréat STMG - Lycée René Descartes (Rennes)</h3>
+    </div>
+	<div class="timeline-item" data-aos="fade-up" data-aos-delay="150">
+      <span class="date">2017</span>
+      <h3>BAFA (Brevet d’Aptitude aux Fonctions d’Animateur) - Céméa (Rennes)</h3>
+    </div>
+  </div>
+</section>
+
+<section id="audio">
+  <h2 data-aos="fade-right">🎧 Extraits audio</h2>
+  <div class="audio-player" data-aos="zoom-in">
+    <p>Interview – Émission du matin</p>
+    <audio controls src="audio/extrait1.mp3"></audio>
+  </div>
+</section>
+
+<section id="cv">
+  <h2 data-aos="fade-right">📄 CV</h2>
+
+  <p data-aos="fade-up">
+    Vous pouvez consulter ou télécharger mon CV papier au format PDF.
+  </p>
+
+  <div class="audio-player" data-aos="zoom-in">
+    <a href="cv/cv-animatrice-radio.pdf" target="_blank" style="font-weight:600;">⬇️ Télécharger mon CV (PDF)</a>
+  </div>
+</section>
+
+<section id="contact">
+  <h2 data-aos="fade-right">Contact</h2>
+	  <div class="audio-player">
+  		<p data-aos="fade-up">📧 lena.lippa@gmail.com</p>
+  		<p data-aos="fade-up">📱 06 25 51 51 05</p>
+	</div>
+</section>
+	
+	<!-- BLOC A : affiché pendant la plage horaire -->
+<div id="blocA" class="bloc" style="display:none;">
+<div class="onair-player">
+			<button id="liveBtn" aria-label="Lecture / Pause">▶</button>
+			<span class="live">● ON AIR <br>ICI ARMORIQUE</span>
+			<input type="range" id="volumeControl" min="0" max="1" step="0.05" value="0.8" aria-label="Volume">
+		</div>
+</div>
+
+<!-- BLOC B : affiché hors plage horaire -->
+<div id="blocB" class="bloc" style="display:none;">
+  <div class="podcast-player">
+  		<button id="playPause" aria-label="Lecture / Pause">▶</button>
+	  	<span class="rec">● REC</span>
+		<input type="range" id="volumeControl" min="0" max="1" step="0.05" value="0.8" aria-label="Volume">
+		<audio id="audioPlayer" src="audio/extrait1.mp3"></audio>
+	</div>
+</div>
+
+
+<footer>© 2025 – Léna LIPPARINI</footer>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+
+  AOS.init({ duration:900, once:true });
+
+  // INTRO ON AIR – suppression auto
+  setTimeout(() => {
+    const intro = document.getElementById('intro-onair');
+    if(intro) intro.remove();
+  }, 2600);
+
+  // MODE SOMBRE({ duration:900, once:true });
+
+  // MODE SOMBRE
+  document.getElementById('themeToggle').onclick = () => {
+    document.body.classList.toggle('dark');
+  };
+
+  // BACKGROUND RONDS JS
+  const canvas = document.getElementById('bg');
+  const ctx = canvas.getContext('2d');
+  let w, h;
+
+  function resize(){
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const circles = Array.from({length:25}, () => ({
+    x: Math.random()*w,
+    y: Math.random()*h,
+    r: 20 + Math.random()*80,
+    s: 0.3 + Math.random(),
+    c: Math.random()>0.5 ? 'rgba(217,75,43,0.4)' : 'rgba(243,156,18,0.4)'
+  }));
+
+  function animate(){
+    ctx.clearRect(0,0,w,h);
+    circles.forEach(c=>{
+      c.y -= c.s;
+      if(c.y + c.r < 0) c.y = h + c.r;
+      ctx.beginPath();
+      ctx.arc(c.x,c.y,c.r,0,Math.PI*2);
+      ctx.fillStyle = c.c;
+      ctx.fill();
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  // PLAYER SIMPLE : PLAY / PAUSE + VOLUME
+  const audioPlayer = document.getElementById('audioPlayer');
+  const playPause = document.getElementById('playPause');
+  const volumeControl = document.getElementById('volumeControl');
+
+  playPause.addEventListener('click', () => {
+    if(audioPlayer.paused){
+      audioPlayer.play();
+      playPause.textContent = '⏸';
+    } else {
+      audioPlayer.pause();
+      playPause.textContent = '▶';
+    }
+  });
+	
+	
+
+  volumeControl.addEventListener('input', () => {
+    audioPlayer.volume = volumeControl.value;
+  });
+	
+	const liveBtn = document.getElementById('liveBtn');
+
+liveBtn.addEventListener('click', () => {
+  audioPlayer.src = 'http://icecast.radiofrance.fr/fbarmorique-midfi.mp3';
+  audioPlayer.play();
+  playPause.textContent = '⏸';
+});
+	
+	
+	function afficherBlocSelonHeure() {
+    const now = new Date();
+
+    const heures = now.getHours();
+    const minutes = now.getMinutes();
+    const minutesActuelles = heures * 60 + minutes;
+
+    // Définir la plage horaire
+    const debut = { h: 12, m: 30 };   // 16:30
+    const fin = { h: 12, m: 30 };    // 19:00
+
+    const minutesDebut = debut.h * 60 + debut.m;
+    const minutesFin = fin.h * 60 + fin.m;
+
+    const blocA = document.getElementById("blocA");
+    const blocB = document.getElementById("blocB");
+
+    if (minutesActuelles >= minutesDebut && minutesActuelles < minutesFin) {
+      blocA.style.display = "block";
+      blocB.style.display = "none";
+    } else {
+      blocA.style.display = "none";
+      blocB.style.display = "block";
+    }
+  }
+
+  // Lancer au chargement + mise à jour automatique
+  afficherBlocSelonHeure();
+  setInterval(afficherBlocSelonHeure, 30000);
+	
+	
+	
+	
+	
+	
+	
+	
+	function statutAntenne() {
+    const container = document.getElementById("antenne");
+    const label = container.querySelector(".label");
+
+    const now = new Date();
+    const minutesActuelles = now.getHours() * 60 + now.getMinutes();
+
+    // Plage ON AIR
+    const debut = { h: 16, m: 30 };   // 09:30
+    const fin = { h: 19, m: 00 };    // 17:15
+
+    const start = debut.h * 60 + debut.m;
+    const end = fin.h * 60 + fin.m;
+
+    if (minutesActuelles >= start && minutesActuelles < end) {
+      container.classList.add("on-air");
+      container.classList.remove("off-air");
+      label.textContent = "ON AIR";
+    } else {
+      container.classList.add("off-air");
+      container.classList.remove("on-air");
+      label.textContent = "OFF AIR";
+    }
+  }
+
+  // Initialisation + rafraîchissement
+  statutAntenne();
+  setInterval(statutAntenne, 30000);
+</script>
+
+</body>
+</html>
